@@ -12,15 +12,8 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
         gummy: ["Sour Gummy", "sans-serif"],
-      },
-    },
-    animation: {
-      blink: "blink 0.7s step-end infinite",
-    },
-    keyframes: {
-      blink: {
-        "0%, 100%": { borderColor: "transparent" },
-        "50%": { borderColor: "currentColor" },
+        cursive: ["Dancing Script", "cursive"],
+        ubuntu: ["Ubuntu", "sans-serif"]
       },
     },
     screens: {

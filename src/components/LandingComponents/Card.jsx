@@ -2,7 +2,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 export default function Card({ image }) {
   return (
-    <div className="bg-cream w-[500px] h-[200px] px-4 py-6 rounded-lg shadow-lg flex flex-col gap-12 items-center text-blueShade text-xl font-semibold">
+    <div className="bg-cream w-[500px] h-[200px] px-4 py-6 rounded-lg shadow-lg flex flex-col gap-7 md:gap-12 items-center text-blueShade text-xl font-semibold">
       {image && (
         <div className="flex justify-between gap-4 w-full">
           <h1
