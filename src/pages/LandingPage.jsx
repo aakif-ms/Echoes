@@ -3,7 +3,6 @@ import CTA2 from "../components/LandingComponents/Cta2";
 import Hero from "../components/LandingComponents/Hero";
 import HoverButton from "../components/LandingComponents/HoverButton";
 import FeatureCards from "../components/LandingComponents/Features";
-import Testimonial from "../components/LandingComponents/Testimonial";
 import Contact from "../components/LandingComponents/Contact";
 
 export default function LandingPage() {
@@ -14,7 +13,6 @@ export default function LandingPage() {
       <HoverButton />
       <CTA2/>
       <FeatureCards/>
-      <Testimonial/>
       <hr />
       <Contact/>
     </>

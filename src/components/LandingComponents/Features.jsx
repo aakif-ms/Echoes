@@ -18,10 +18,10 @@ export default function FeaturesCards() {
         </p>
       </div>
       <div className="flex flex-wrap justify-center gap-16">
-        <Card image={true}/>
-        <Card image={true}/>
-        <Card image={true}/>
-        <Card image={true}/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
       </div>
     </div>
   );

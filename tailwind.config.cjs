@@ -13,7 +13,10 @@ module.exports = {
         roboto: ["Roboto", "sans-serif"],
         gummy: ["Sour Gummy", "sans-serif"],
         cursive: ["Dancing Script", "cursive"],
-        ubuntu: ["Ubuntu", "sans-serif"]
+        ubuntu: ["Ubuntu", "sans-serif"],
+      },
+      backgroundImage: {
+        prince: "url('./src/assets/LittlePrince1.jpg')",
       },
     },
     screens: {
