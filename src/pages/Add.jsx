@@ -11,7 +11,7 @@ export default function Add() {
         <form className="flex flex-col justify-between h-full">
           <span className="flex flex-col items-start">
             <label htmlFor="name" className="text-xl font-medium font-gummy">
-              Name:
+              Title:
             </label>
             <input
               type="text"

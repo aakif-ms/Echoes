@@ -4,6 +4,7 @@ import RootLayout from "./pages/RootLayout";
 import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import Add from "./pages/Add";
+import View from "./pages/View";
 import Error from "./pages/Error";
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "home/add",
         element: <Add/>
+      },
+      {
+        path: "home/view",
+        element: <View/>
       }
     ],
   },
