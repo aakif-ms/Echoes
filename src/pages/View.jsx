@@ -1,5 +1,7 @@
 import Marquee from "react-fast-marquee";
-import MARQUEE_IMAGES from "../assets/marqueeImages/marquee";
+
+import MemoryList from "../components/HomeComponents/MemoryList.jsx"
+import MARQUEE_IMAGES from "../assets/marqueeImages/marquee.js";
 
 export default function View() {
   return (
@@ -18,6 +20,8 @@ export default function View() {
         <label htmlFor="search" className="text-xl text-blueShade font-gummy">Search:</label>
         <input type="text" id="search" name="search" placeholder="Search Echoes" className="border-2 border-black w-96 px-3 py-2 rounded-xl" />
       </form>
+      <MemoryList/>
+
     </>
   );
 }
