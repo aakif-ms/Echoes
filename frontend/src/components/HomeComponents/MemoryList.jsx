@@ -15,7 +15,6 @@ export default function Memories() {
   const closeEditModal = () => setIsEditModalOpen(false);
   const openDeleteModal = () => setIsDeleteModalOpen(true);
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
-
   return (
     <div className="flex flex-col gap-6 mx-8 mt-16 overflow-hidden">
       {memories.map((memory, index) => (
