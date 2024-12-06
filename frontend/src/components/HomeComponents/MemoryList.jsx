@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { useState, useContext } from "react";
+import { useContext } from "react";
+import useModal from "../hooks/useModal.jsx";
 
 import { EchoContext } from "../../store/cart-context.jsx";
 import { MdEdit } from "react-icons/md";
@@ -9,14 +10,8 @@ import Button from "../Button.jsx";
 import Modal from "./Modal.jsx";
 
 export default function Memories() {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const { openModal, closeModal, currentModal } = useModal();
   const echoes = useContext(EchoContext);
-
-  const openEditModal = () => setIsEditModalOpen(true);
-  const closeEditModal = () => setIsEditModalOpen(false);
-  const openDeleteModal = () => setIsDeleteModalOpen(true);
-  const closeDeleteModal = () => setIsDeleteModalOpen(false);
   return (
     <div className="flex flex-col gap-6 mx-8 mt-16 overflow-hidden">
       {echoes.map((echo, index) => (
@@ -53,11 +48,11 @@ export default function Memories() {
             <div className="flex gap-4">
               <MdEdit
                 className="text-2xl hover:cursor-pointer"
-                onClick={openEditModal}
+                onClick={() => openModal("Edit Echo")}
               />
               <MdDelete
                 className="text-2xl hover:cursor-pointer"
-                onClick={openDeleteModal}
+                onClick={() => openModal("Delete Echo")}
               />
             </div>
           </motion.div>
@@ -66,14 +61,14 @@ export default function Memories() {
       <span className="self-center mb-10">
         <Button>View All Echoes</Button>
       </span>
-
-      {isEditModalOpen && (
-        <Modal title="Edit Echo" edit={true} onClose={closeEditModal}>
+      {currentModal === "Edit Echo" && (
+        <Modal title="Edit Echo" edit={true} onClose={closeModal}>
           <p>Content for editing the memory goes here.</p>
         </Modal>
       )}
-      {isDeleteModalOpen && (
-        <Modal title="Delete Echo" del={true} onClose={closeDeleteModal}>
+
+      {currentModal === "Delete Echo" && (
+        <Modal title="Delete Echo" del={true} onClose={closeModal}>
           <p>Are you sure you want to delete this memory?</p>
         </Modal>
       )}
