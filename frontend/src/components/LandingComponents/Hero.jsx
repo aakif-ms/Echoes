@@ -28,12 +28,12 @@ export default function Hero() {
 
       <Marquee className="mt-24 mb-4" speed={65}>
         {MARQUEE_IMAGES.map((image, index) => (
-          <img src={image} key={index} alt="image" className="w-[400px] mx-4" />
+          <img src={image} key={index} alt="image" className="w-[400px] mx-4 rounded-xl" />
         ))}
       </Marquee>
       <Marquee className="mb-16" direction="right" speed={65}>
         {MARQUEE_IMAGES.map((image, index) => (
-          <img src={image} key={index} alt="image" className="w-[400px] mx-4" />
+          <img src={image} key={index} alt="image" className="w-[400px] mx-4 rounded-xl" />
         ))}
       </Marquee>
     </>

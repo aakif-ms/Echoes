@@ -1,6 +1,42 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import prince from "../assets/LittlePrince1.jpg";
 
 export default function Add() {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    date: "",
+  });
+
+  function handleOnChange(event) {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      await axios.post("http://localhost:3000/add", formData);
+      alert("Echo added successfully");
+    } catch (error) {
+      console.log("Error Submitting Data", error);
+      alert("Faled to submit data");
+    }
+  }
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/add")
+      .then((response) => {
+        console.log(response.data.message);
+      })
+      .catch((e) => {
+        console.log("An Error Occurred", e);
+      });
+  }, []);
+
   return (
     <div
       className="h-screen w-full bg-cover bg-center flex flex-col justify-around items-center"
@@ -8,40 +44,49 @@ export default function Add() {
     >
       <h1 className="text-6xl font-cursive text-gray-900">Write an Echo</h1>
       <div className="bg-white/50 w-[400px] h-[600px] backdrop-blur-sm p-6 rounded-lg shadow-md ">
-        <form className="flex flex-col justify-between h-full">
+        <form
+          className="flex flex-col justify-between h-full"
+          onSubmit={handleSubmit}
+        >
           <span className="flex flex-col items-start">
-            <label htmlFor="name" className="text-xl font-medium font-gummy">
+            <label htmlFor="title" className="text-xl font-medium font-gummy">
               Title:
             </label>
             <input
               type="text"
-              id="name"
-              name="name"
+              id="title"
+              name="title"
               className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
               placeholder="Enter the title"
+              onChange={handleOnChange}
             />
           </span>
           <span className="flex flex-col items-start">
-            <label htmlFor="name" className="text-xl font-medium font-gummy">
+            <label htmlFor="date" className="text-xl font-medium font-gummy">
               Date:
             </label>
             <input
               type="date"
-              id="name"
-              name="name"
+              id="date"
+              name="date"
               className="py-1 px-8 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
               placeholder="Enter the title"
+              onChange={handleOnChange}
             />
           </span>
           <span className="flex flex-col items-start">
-            <label htmlFor="name" className="text-xl font-medium font-gummy">
+            <label
+              htmlFor="description"
+              className="text-xl font-medium font-gummy"
+            >
               Description:
             </label>
             <textarea
-              name=""
-              id=""
+              name="description"
+              id="description"
               rows={3}
               className="py-1 px-2 w-full border-2 rounded-xl border-black bg-transparent focus:outline-none text-lg font-gummy font-light placeholder:text-slate-600 resize-none"
+              onChange={handleOnChange}
             ></textarea>
           </span>
           <span className="flex flex-col items-start gap-3">
@@ -55,6 +100,13 @@ export default function Add() {
               >
                 Choose Files
               </label>
+              <input
+                type="file"
+                id="file"
+                name="file" 
+                className="hidden"
+                onChange={handleOnChange} 
+              />
             </div>
           </span>
           <div className="flex justify-around">

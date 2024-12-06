@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import EchoProvider from "./store/cart-context";
 
 import RootLayout from "./pages/RootLayout";
 import LandingPage from "./pages/LandingPage";
@@ -20,12 +21,12 @@ const router = createBrowserRouter([
       },
       {
         path: "home/add",
-        element: <Add/>
+        element: <Add />,
       },
       {
         path: "home/view",
-        element: <View/>
-      }
+        element: <View />,
+      },
     ],
   },
 ]);
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
 export default function App() {
   return (
     <div>
-      <RouterProvider router={router} />
+      <EchoProvider>
+        <RouterProvider router={router} />
+      </EchoProvider>
     </div>
   );
 }
