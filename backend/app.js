@@ -48,7 +48,7 @@ app.get("/sendEcho", async (req, res) => {
 
 app.put("/updateEcho", async (req, res) => {
   try {
-    console.log(req.body);  
+    console.log(req.body);
     const { id } = req.body;
     await Echo.findByIdAndUpdate(id, { ...req.body });
     console.log("Echo Updated Successfully");
@@ -59,14 +59,14 @@ app.put("/updateEcho", async (req, res) => {
 
 app.delete("/deleteEcho", async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { id } = req.body;
     await Echo.findByIdAndDelete(id);
-    console.log("Deleting")
+    console.log("Deleting");
   } catch (e) {
-    console.log('Error occurred deleting', e);
+    console.log("Error occurred deleting", e);
   }
-})
+});
 
 app.listen(3000, () => {
   console.log("Listening on port 3000");
