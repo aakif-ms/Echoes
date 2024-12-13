@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useModal from "../hooks/useModal.jsx";
 
 import { EchoContext } from "../../store/cart-context.jsx";
@@ -10,6 +10,7 @@ import Button from "../Button.jsx";
 import Modal from "./Modal.jsx";
 
 export default function Memories() {
+  const [echoId, setEchoId] = useState("");
   const { openModal, closeModal, currentModal } = useModal();
   const echoes = useContext(EchoContext);
   return (
@@ -48,11 +49,17 @@ export default function Memories() {
             <div className="flex gap-4">
               <MdEdit
                 className="text-2xl hover:cursor-pointer"
-                onClick={() => openModal("Edit Echo")}
+                onClick={() => {
+                  setEchoId(echo.id);
+                  openModal("Edit Echo");
+                }}
               />
               <MdDelete
                 className="text-2xl hover:cursor-pointer"
-                onClick={() => openModal("Delete Echo")}
+                onClick={() => {
+                  setEchoId(echo.id);
+                  openModal("Delete Echo");
+                }}
               />
             </div>
           </motion.div>
@@ -62,13 +69,13 @@ export default function Memories() {
         <Button>View All Echoes</Button>
       </span>
       {currentModal === "Edit Echo" && (
-        <Modal title="Edit Echo" edit={true} onClose={closeModal}>
+        <Modal title="Edit Echo" edit={true} onClose={closeModal} id={echoId}>
           <p>Content for editing the memory goes here.</p>
         </Modal>
       )}
 
       {currentModal === "Delete Echo" && (
-        <Modal title="Delete Echo" del={true} onClose={closeModal}>
+        <Modal title="Delete Echo" del={true} onClose={closeModal} id={echoId}>
           <p>Are you sure you want to delete this memory?</p>
         </Modal>
       )}

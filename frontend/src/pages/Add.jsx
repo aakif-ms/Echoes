@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import prince from "../assets/LittlePrince1.jpg";
@@ -25,17 +25,6 @@ export default function Add() {
       alert("Faled to submit data");
     }
   }
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/add")
-      .then((response) => {
-        console.log(response.data.message);
-      })
-      .catch((e) => {
-        console.log("An Error Occurred", e);
-      });
-  }, []);
 
   return (
     <div

@@ -24,7 +24,9 @@ export default function EchoProvider({ children }) {
         console.log("Error fetching data", error);
       }
     };
-    fetchEchoes();
+    const interval = setInterval(fetchEchoes, 1000);
+
+    return () => clearInterval(interval);
   }, []);
   return <EchoContext.Provider value={echoes}>{children}</EchoContext.Provider>;
 }
