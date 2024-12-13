@@ -30,7 +30,10 @@ export default function Modal({ title, edit, del, onClose, id }) {
   async function handleOnDelete(event) {
     event.preventDefault();
     try {
-      await axios.delete("http://localhost:3000/deleteEcho", formData);
+      await axios.delete("http://localhost:3000/deleteEcho", {
+        data: formData,
+      });
+      console.log(formData);  
       alert("Echo deleted successfully");
       onClose();
     } catch(e) {
