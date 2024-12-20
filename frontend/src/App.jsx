@@ -7,6 +7,8 @@ import HomePage from "./pages/HomePage";
 import Add from "./pages/Add";
 import View from "./pages/View";
 import Error from "./pages/Error";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"/login",
+    element: <Login/>
+  },
+  {
+    path:"/signUp",
+    element: <SignUp/>
+  }
 ]);
 
 export default function App() {

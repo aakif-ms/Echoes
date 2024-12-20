@@ -25,7 +25,7 @@ export default function Memories() {
           <div className="w-full sm:w-1/3">
             <motion.img
               initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
               src={kedarkantha}
               alt={echo.title}
@@ -34,7 +34,7 @@ export default function Memories() {
           </div>
           <motion.div
             initial={{ opacity: 0, x: index % 2 === 0 ? 100 : -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.5 }}
             className="w-full sm:w-2/3 flex flex-col px-4 grow min-h-full justify-between"
           >

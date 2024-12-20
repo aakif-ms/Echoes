@@ -8,6 +8,7 @@ module.exports = {
         beige: "#fffcf3",
         blueShade: "#182465",
         cream: "#f9d399",
+        darkPurple: "#070039",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
@@ -21,6 +22,7 @@ module.exports = {
     },
     screens: {
       md: "850px",
+      lg: "1650px",
     },
   },
   plugins: [],

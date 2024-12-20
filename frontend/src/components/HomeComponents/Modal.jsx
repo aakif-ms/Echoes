@@ -1,5 +1,5 @@
-import { useState } from "react";
-import axios from 'axios'
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 export default function Modal({ title, edit, del, onClose, id }) {
   const [formData, setFormData] = useState({
@@ -9,6 +9,22 @@ export default function Modal({ title, edit, del, onClose, id }) {
     id: id,
   });
 
+  useEffect(() => {
+    if (edit && id) {
+      axios
+        .get(`http://localhost:3000/sendEcho/${id}`)
+        .then((response) => {
+          const echoData = response.data;
+          setFormData({
+            title: echoData.title,
+            description: echoData.description,
+            date: echoData.date,
+            id: echoData._id,
+          });
+        })
+        .catch((error) => console.error("Error fetching echo data:", error));
+    }
+  }, [edit, id]);
 
   function handleOnChange(event) {
     const { name, value } = event.target;
@@ -21,7 +37,6 @@ export default function Modal({ title, edit, del, onClose, id }) {
       await axios.put("http://localhost:3000/updateEcho", formData);
       alert("Echo updated successfully");
       onClose();
-      console.log("Modal closed");
     } catch (e) {
       console.error("Error during submission:", e);
     }
@@ -33,10 +48,9 @@ export default function Modal({ title, edit, del, onClose, id }) {
       await axios.delete("http://localhost:3000/deleteEcho", {
         data: formData,
       });
-      console.log(formData);  
       alert("Echo deleted successfully");
       onClose();
-    } catch(e) {
+    } catch (e) {
       console.error("Error during deletion", e);
     }
   }
@@ -66,6 +80,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="text"
                 id="title"
                 name="title"
+                value={formData.title}  // Set initial value
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 placeholder="Enter the title"
                 onChange={handleOnChange}
@@ -79,6 +94,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="date"
                 id="date"
                 name="date"
+                value={formData.date}  // Set initial value
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 onChange={handleOnChange}
               />
@@ -94,22 +110,10 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 name="description"
                 id="description"
                 rows={3}
+                value={formData.description}  // Set initial value
                 className="py-1 px-2 w-full border-2 rounded-xl border-black bg-transparent focus:outline-none text-lg font-gummy font-light placeholder:text-slate-600 resize-none"
                 onChange={handleOnChange}
               ></textarea>
-            </span>
-            <span className="flex flex-col items-start gap-3">
-              <label htmlFor="file" className="text-xl font-medium font-gummy">
-                Upload File:
-              </label>
-              <div className="w-full">
-                <label
-                  htmlFor="file"
-                  className="py-2 px-6 w-full text-center bg-transparent border-2 border-black rounded-full cursor-pointer text-xl font-gummy font-light hover:bg-gray-600"
-                >
-                  Choose Files
-                </label>
-              </div>
             </span>
             <div className="flex justify-around">
               <button
@@ -130,8 +134,9 @@ export default function Modal({ title, edit, del, onClose, id }) {
         )}
         {del && (
           <form onSubmit={handleOnDelete}>
-            <p>Are You sure you want to delete this</p>
-            <button
+            <p>Are You sure you want to delete this?</p>
+            <div className="flex justify-around">
+              <button
                 type="submit"
                 className="mt-4 bg-green-500 text-white py-2 px-4 rounded-lg"
               >
@@ -144,6 +149,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
               >
                 Cancel
               </button>
+            </div>
           </form>
         )}
       </div>
