@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import EchoProvider from "./store/cart-context";
 
 import RootLayout from "./pages/RootLayout";
@@ -10,6 +14,14 @@ import Error from "./pages/Error";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
+function ProtectedRoute({ children }) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,26 +31,38 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       {
         path: "home",
-        element: <HomePage />,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "home/add",
-        element: <Add />,
+        element: (
+          <ProtectedRoute>
+            <Add />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "home/view",
-        element: <View />,
+        element: (
+          <ProtectedRoute>
+            <View />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
   {
-    path:"/login",
-    element: <Login/>
+    path: "/login",
+    element: <Login />,
   },
   {
-    path:"/signUp",
-    element: <SignUp/>
-  }
+    path: "/signUp",
+    element: <SignUp />,
+  },
 ]);
 
 export default function App() {

@@ -12,7 +12,7 @@ import Modal from "./Modal.jsx";
 export default function Memories() {
   const [echoId, setEchoId] = useState("");
   const { openModal, closeModal, currentModal } = useModal();
-  const echoes = useContext(EchoContext);
+  const { echoes } = useContext(EchoContext);
   return (
     <div className="flex flex-col gap-6 mx-8 mt-16 overflow-hidden">
       {echoes.map((echo, index) => (

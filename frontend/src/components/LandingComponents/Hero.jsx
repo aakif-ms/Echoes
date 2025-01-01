@@ -26,7 +26,7 @@ export default function Hero() {
         <Button animate={false}>Get Started</Button>
       </div>
 
-      <Marquee className="mt-24 mb-4" speed={65}>
+      {/* <Marquee className="mt-24 mb-4" speed={65}>
         {MARQUEE_IMAGES.map((image, index) => (
           <img src={image} key={index} alt="image" className="w-[400px] mx-4 rounded-xl" />
         ))}
@@ -35,7 +35,7 @@ export default function Hero() {
         {MARQUEE_IMAGES.map((image, index) => (
           <img src={image} key={index} alt="image" className="w-[400px] mx-4 rounded-xl" />
         ))}
-      </Marquee>
+      </Marquee> */}
     </>
   );
 }

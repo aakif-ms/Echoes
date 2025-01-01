@@ -6,6 +6,23 @@ export const EchoContext = createContext();
 
 export default function EchoProvider({ children }) {
   const [echoes, setEchoes] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
+
+  function saveToken(newToken) {
+    setToken(newToken);
+    if (newToken) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken !== token) {
+      setToken(token);
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchEchoes = async () => {
@@ -28,5 +45,5 @@ export default function EchoProvider({ children }) {
 
     return () => clearInterval(interval);
   }, []);
-  return <EchoContext.Provider value={echoes}>{children}</EchoContext.Provider>;
+  return <EchoContext.Provider value={{echoes, saveToken, token}}>{children}</EchoContext.Provider>;
 }
