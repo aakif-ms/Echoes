@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const path = require('path'); 
 const Schema = mongoose.Schema;
 
 const defaultImage = '../../assets/Kedarkantha.jpg';
@@ -23,6 +22,13 @@ const EchoSchema = new Schema({
         required: false,
         default: defaultImage,
     },
+});
+
+EchoSchema.pre('save', function(next) {
+    if (!this.description || this.description.trim() === '') {
+        this.description = this.schema.paths.description.defaultValue;
+    }
+    next();
 });
 
 EchoSchema.methods.getFormattedBirthDate = function() {

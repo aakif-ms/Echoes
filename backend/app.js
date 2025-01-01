@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const Echo = require("./models/echo.js");
 const cors = require("cors");
+const userRoutes = require("./routes/user.js");
 
 main().catch((err) => console.log(err));
 
@@ -19,8 +20,9 @@ app.use(
   })
 );
 
+app.use("/auth", userRoutes);
+
 app.get("/", (req, res) => {
-  console.log("Express Is setup");
   res.json({ message: "Hello from backend" });
 });
 
