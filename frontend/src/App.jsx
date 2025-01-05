@@ -3,7 +3,9 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
+import { useState, useEffect } from "react";
 import EchoProvider from "./store/cart-context";
+import { verify } from "./api";
 
 import RootLayout from "./pages/RootLayout";
 import LandingPage from "./pages/LandingPage";
@@ -15,10 +17,38 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
 function ProtectedRoute({ children }) {
+  const [isAuthenticated, setIsAuthenticated] = useState(null); 
   const token = localStorage.getItem("token");
-  if (!token) {
+
+  useEffect(() => {
+    async function checkAuth() {
+      if (!token) {
+        setIsAuthenticated(false);
+        return;
+      }
+      try {
+        const response = await verify(token);
+        if (response.status === 200) {
+          setIsAuthenticated(true); 
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Token verification failed:", error);
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, [token]);
+
+  if (isAuthenticated === null) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
+
   return children;
 }
 

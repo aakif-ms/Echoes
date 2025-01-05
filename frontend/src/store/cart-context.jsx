@@ -8,10 +8,12 @@ export default function EchoProvider({ children }) {
   const [echoes, setEchoes] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  function saveToken(newToken) {
+  function saveToken(newToken, user) {
     setToken(newToken);
+    console.log(user);
     if (newToken) {
-      localStorage.setItem("token", token);
+      localStorage.setItem("token", newToken);
+      localStorage.setItem("username", user.name);
     } else {
       localStorage.removeItem("token");
     }

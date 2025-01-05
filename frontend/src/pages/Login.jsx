@@ -29,7 +29,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await login(formData);
-      saveToken(data.token);
+      saveToken(data.token, data.user);
       navigate("/home");
     } catch (err) {
       console.log(err.response.data.message);
