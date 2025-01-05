@@ -26,7 +26,7 @@ module.exports.loginUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
     const token = jwt.sign({ id: user._id, name: user.name }, "secret");
-    res.json({ token, user: user.name });
+    res.json({ token, user: user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -34,14 +34,13 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.verifyUser = (req, res) => {
   const token = req.header("Authorization");
-  if (!token) {
-    res.status(401).json({ message: "Authorization Denied" });
+  if(!token) {
+    res.status(401).json({message: "Authorization denied"})
   }
-
-  try {
+  try{
     const verified = jwt.verify(token, "secret");
     res.json(verified);
-  } catch (err) {
-    res.status(401).json({ message: "Token is not valid", error: err.message });
+  } catch(err) {
+    res.status(401).json({error: err.message, message: "Invalid Token"})
   }
-};
+}
