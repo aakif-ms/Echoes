@@ -15,7 +15,7 @@ export default function Login() {
     password: "",
   });
   const navigate = useNavigate();
-  const {saveToken} = useContext(EchoContext);
+  const { saveToken } = useContext(EchoContext);
 
   function handleInputChange(event) {
     const { name, value } = event.target;

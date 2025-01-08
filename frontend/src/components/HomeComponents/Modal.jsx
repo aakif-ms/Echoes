@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export default function Modal({ title, edit, del, onClose, id }) {
   const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
   useEffect(() => {
     if (edit && id) {
       axios
-        .get(`http://localhost:3000/sendEcho/${id}`)
+        .get(`http://localhost:3000/echo/updateEcho/${id}`)
         .then((response) => {
           const echoData = response.data;
           setFormData({
@@ -34,7 +34,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
   async function handleOnSubmit(event) {
     event.preventDefault();
     try {
-      await axios.put("http://localhost:3000/updateEcho", formData);
+      await axios.put("http://localhost:3000/echo/updateEcho", formData);
       alert("Echo updated successfully");
       onClose();
     } catch (e) {
@@ -45,7 +45,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
   async function handleOnDelete(event) {
     event.preventDefault();
     try {
-      await axios.delete("http://localhost:3000/deleteEcho", {
+      await axios.delete("http://localhost:3000/echo/deleteEcho", {
         data: formData,
       });
       alert("Echo deleted successfully");
@@ -80,7 +80,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="text"
                 id="title"
                 name="title"
-                value={formData.title}  // Set initial value
+                value={formData.title} // Set initial value
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 placeholder="Enter the title"
                 onChange={handleOnChange}
@@ -94,7 +94,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="date"
                 id="date"
                 name="date"
-                value={formData.date}  // Set initial value
+                value={formData.date} // Set initial value
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 onChange={handleOnChange}
               />
@@ -110,7 +110,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 name="description"
                 id="description"
                 rows={3}
-                value={formData.description}  // Set initial value
+                value={formData.description} // Set initial value
                 className="py-1 px-2 w-full border-2 rounded-xl border-black bg-transparent focus:outline-none text-lg font-gummy font-light placeholder:text-slate-600 resize-none"
                 onChange={handleOnChange}
               ></textarea>

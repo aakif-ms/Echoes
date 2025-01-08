@@ -10,6 +10,9 @@ export default function Add() {
     date: "",
   });
 
+  const id = localStorage.getItem("userId");
+  console.log(id);
+
   function handleOnChange(event) {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -17,8 +20,12 @@ export default function Add() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const data = {
+      formData,
+      id,
+    };
     try {
-      await axios.post("http://localhost:3000/add", formData);
+      await axios.post("http://localhost:3000/echo/addEcho", data);
       alert("Echo added successfully");
     } catch (error) {
       console.log("Error Submitting Data", error);
@@ -92,9 +99,9 @@ export default function Add() {
               <input
                 type="file"
                 id="file"
-                name="file" 
+                name="file"
                 className="hidden"
-                onChange={handleOnChange} 
+                onChange={handleOnChange}
               />
             </div>
           </span>

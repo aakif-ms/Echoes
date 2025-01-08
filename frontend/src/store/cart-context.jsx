@@ -7,13 +7,17 @@ export const EchoContext = createContext();
 export default function EchoProvider({ children }) {
   const [echoes, setEchoes] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [name, setName] = useState(localStorage.getItem("username") || null);
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || null);
 
   function saveToken(newToken, user) {
     setToken(newToken);
-    console.log(user);
+    setName(user.name);
+    setUserId(user._id);
     if (newToken) {
       localStorage.setItem("token", newToken);
       localStorage.setItem("username", user.name);
+      localStorage.setItem("userId", user._id);
     } else {
       localStorage.removeItem("token");
     }
@@ -26,26 +30,27 @@ export default function EchoProvider({ children }) {
     }
   }, [token]);
 
-  useEffect(() => {
-    const fetchEchoes = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/sendEcho");
+  const fetchEchoes = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/echo/sendEcho/${userId}`
+      );
+      const newData = response.data.map((echo) => ({
+        id: echo._id,
+        image: echo.image,
+        title: echo.title,
+        description: echo.description,
+      }));
 
-        const newData = response.data.map((echo) => ({
-          id: echo._id,
-          image: echo.image,
-          title: echo.title,
-          description: echo.description,
-        }));
-
-        setEchoes(newData);
-      } catch (error) {
-        console.log("Error fetching data", error);
-      }
-    };
-    const interval = setInterval(fetchEchoes, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-  return <EchoContext.Provider value={{echoes, saveToken, token}}>{children}</EchoContext.Provider>;
+      setEchoes(newData);
+    } catch (error) {
+      console.log("Error fetching data", error);
+    }
+  };
+  fetchEchoes();
+  return (
+    <EchoContext.Provider value={{ echoes, saveToken, token, name }}>
+      {children}
+    </EchoContext.Provider>
+  );
 }
