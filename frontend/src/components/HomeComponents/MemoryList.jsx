@@ -1,23 +1,29 @@
 import { motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useContext, useState} from "react";
 import useModal from "../hooks/useModal.jsx";
 
 import { EchoContext } from "../../store/cart-context.jsx";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import kedarkantha from "../../assets/Kedarkantha.jpg";
 import Button from "../Button.jsx";
 import Modal from "./Modal.jsx";
 
 export default function Memories() {
   const [echoId, setEchoId] = useState("");
   const { openModal, closeModal, currentModal } = useModal();
-  const { echoes } = useContext(EchoContext);
+  const { echoes, fetchEchoes } = useContext(EchoContext);
+
+  function handleRefresh() {
+    fetchEchoes();
+  }
+
+  handleRefresh();
+
   return (
     <div className="flex flex-col gap-6 mx-8 mt-16 overflow-hidden">
       {echoes.map((echo, index) => (
         <div
-          key={echo.id}
+          key={echo._id}
           className={`flex flex-col md:flex-row mb-6 ${
             index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
           } items-stretch `}
@@ -27,7 +33,7 @@ export default function Memories() {
               initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.5 }}
-              src={kedarkantha}
+              src={echo.image}
               alt={echo.title}
               className="w-full h-96 object-cover rounded-lg"
             />
@@ -50,14 +56,14 @@ export default function Memories() {
               <MdEdit
                 className="text-2xl hover:cursor-pointer"
                 onClick={() => {
-                  setEchoId(echo.id);
+                  setEchoId(echo._id);
                   openModal("Edit Echo");
                 }}
               />
               <MdDelete
                 className="text-2xl hover:cursor-pointer"
                 onClick={() => {
-                  setEchoId(echo.id);
+                  setEchoId(echo._id);
                   openModal("Delete Echo");
                 }}
               />

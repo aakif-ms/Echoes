@@ -20,6 +20,8 @@ export default function EchoProvider({ children }) {
       localStorage.setItem("userId", user._id);
     } else {
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("userId");
     }
   }
 
@@ -30,26 +32,27 @@ export default function EchoProvider({ children }) {
     }
   }, [token]);
 
+  // useEffect(() => {
+  //   if (userId) {
+
+  //     fetchEchoes();
+  //   }
+  // }, [userId]);
+
   const fetchEchoes = async () => {
     try {
       const response = await axios.get(
         `http://localhost:3000/echo/sendEcho/${userId}`
       );
-      const newData = response.data.map((echo) => ({
-        id: echo._id,
-        image: echo.image,
-        title: echo.title,
-        description: echo.description,
-      }));
-
-      setEchoes(newData);
+      setEchoes(response.data);
     } catch (error) {
-      console.log("Error fetching data", error);
+      console.error(error);
     }
   };
-  fetchEchoes();
+  
+
   return (
-    <EchoContext.Provider value={{ echoes, saveToken, token, name }}>
+    <EchoContext.Provider value={{ echoes, saveToken, token, name, fetchEchoes }}>
       {children}
     </EchoContext.Provider>
   );

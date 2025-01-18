@@ -44,6 +44,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
 
   async function handleOnDelete(event) {
     event.preventDefault();
+    console.log(formData)
     try {
       await axios.delete("http://localhost:3000/echo/deleteEcho", {
         data: formData,
@@ -80,7 +81,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="text"
                 id="title"
                 name="title"
-                value={formData.title} // Set initial value
+                value={formData.title}
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 placeholder="Enter the title"
                 onChange={handleOnChange}
@@ -94,7 +95,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 type="date"
                 id="date"
                 name="date"
-                value={formData.date} // Set initial value
+                value={formData.date}
                 className="py-1 px-2 w-full border-b-2 border-black bg-transparent focus:outline-none text-xl font-gummy font-light placeholder:text-slate-600"
                 onChange={handleOnChange}
               />
@@ -110,7 +111,7 @@ export default function Modal({ title, edit, del, onClose, id }) {
                 name="description"
                 id="description"
                 rows={3}
-                value={formData.description} // Set initial value
+                value={formData.description} 
                 className="py-1 px-2 w-full border-2 rounded-xl border-black bg-transparent focus:outline-none text-lg font-gummy font-light placeholder:text-slate-600 resize-none"
                 onChange={handleOnChange}
               ></textarea>

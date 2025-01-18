@@ -8,28 +8,39 @@ export default function Add() {
     title: "",
     description: "",
     date: "",
+    image: null,
   });
 
   const id = localStorage.getItem("userId");
   console.log(id);
 
   function handleOnChange(event) {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = event.target;
+    if (name === "image") {
+      setFormData({ ...formData, [name]: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const data = {
-      formData,
-      id,
-    };
+
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("date", formData.date);
+    data.append("image", formData.image);
+    data.append("id", id);
+
     try {
-      await axios.post("http://localhost:3000/echo/addEcho", data);
+      await axios.post("http://localhost:3000/echo/addEcho", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       alert("Echo added successfully");
     } catch (error) {
       console.log("Error Submitting Data", error);
-      alert("Faled to submit data");
+      alert("Failed to submit data");
     }
   }
 
@@ -99,7 +110,7 @@ export default function Add() {
               <input
                 type="file"
                 id="file"
-                name="file"
+                name="image"
                 className="hidden"
                 onChange={handleOnChange}
               />
