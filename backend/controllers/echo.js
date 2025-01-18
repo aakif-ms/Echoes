@@ -21,13 +21,27 @@ module.exports.sendSingleEcho = async (req, res) => {
 };
 
 module.exports.addEcho = async (req, res) => {
-  const { formData, id } = req.body;
   try {
-    const echo = new Echo(formData);
-    echo.author = id;
+    const { title, description, date, id } = req.body;
+    const imagePath = req.file
+      ? `http://localhost:3000/uploads/images/${req.file.filename}`
+      : undefined;
+
+    const echo = new Echo({
+      title,
+      description,
+      date,
+      image: imagePath,
+      author: id,
+    });
+
+    console.log(echo)
+
     await echo.save();
+    res.status(201).json({ message: "Echo added successfully!" });
   } catch (error) {
-    console.log("Error Occurred: ", error);
+    console.error("Error Occurred: ", error);
+    res.status(500).json({ error: "Failed to add echo" });
   }
 };
 
@@ -45,6 +59,7 @@ module.exports.updateEcho = async (req, res) => {
 module.exports.deleteEcho = async (req, res) => {
   try {
     const { id } = req.body;
+    console.log(id)
     await Echo.findByIdAndDelete(id);
     console.log("Deleting");
   } catch (e) {
