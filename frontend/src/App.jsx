@@ -10,14 +10,14 @@ import { verify } from "./api";
 import RootLayout from "./pages/RootLayout";
 import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
-import Add from "./pages/Add";
+import AddPage from "./pages/Add";
 import View from "./pages/View";
 import Error from "./pages/Error";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 
 function ProtectedRoute({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); 
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function ProtectedRoute({ children }) {
       try {
         const response = await verify(token);
         if (response.status === 200) {
-          setIsAuthenticated(true); 
+          setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
         }
@@ -37,7 +37,7 @@ function ProtectedRoute({ children }) {
         console.error("Token verification failed:", error);
         setIsAuthenticated(false);
       }
-    };
+    }
     checkAuth();
   }, [token]);
 
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         path: "home/add",
         element: (
           <ProtectedRoute>
-            <Add />
+            <AddPage/>
           </ProtectedRoute>
         ),
       },
